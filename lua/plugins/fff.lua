@@ -5,8 +5,8 @@ return {
   end,
   opts = {
     debug = {
-      enabled = true,
-      show_scores = true,
+      enabled = false,
+      show_scores = false,
     },
   },
   lazy = false,
