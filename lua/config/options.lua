@@ -5,3 +5,5 @@
 vim.g.snacks_animate = false
 
 vim.opt.guicursor = "n-v-ve-c-o-sm:block,i-ci:ver25,r-cr:hor20"
+
+vim.diagnostic.config({ virtual_text = false })
