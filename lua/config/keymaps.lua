@@ -17,3 +17,19 @@ vim.keymap.set("n", "<leader>bd", close_buffer_safely, { desc = "Delete Buffer" 
 
 vim.keymap.set("n", "<S-Right>", "<cmd>BufferLineCycleNext<cr>", { desc = "Next Buffer" })
 vim.keymap.set("n", "<S-Left>", "<cmd>BufferLineCyclePrev<cr>", { desc = "Prev Buffer" })
+
+vim.keymap.set("ca", "QA", "qa")
+vim.keymap.set("ca", "Qa", "qa")
+vim.keymap.set("ca", "Q", "q")
+vim.keymap.set("ca", "QW", "qw")
+vim.keymap.set("ca", "Qw", "qw")
+vim.keymap.set("ca", "QWA", "qwa")
+vim.keymap.set("ca", "QWa", "qwa")
+vim.keymap.set("ca", "QWq", "qwq")
+vim.keymap.set("ca", "Qwq", "qwq")
+
+vim.keymap.set("n", "<leader>yf", function()
+  local path = vim.fn.fnamemodify(vim.fn.expand("%:p"), ":~:.")
+  vim.fn.setreg("+", path)
+  vim.notify(path, vim.log.levels.INFO)
+end, { desc = "Copy Buffer Path" })
