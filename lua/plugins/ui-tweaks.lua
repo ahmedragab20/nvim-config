@@ -1,12 +1,8 @@
 return {
-  -- Hide bufferline when only 1 buffer is open
+  -- Disable buffer tabs
   {
     "akinsho/bufferline.nvim",
-    opts = {
-      options = {
-        always_show_bufferline = false,
-      },
-    },
+    enabled = false,
   },
 
   -- Minimal lualine
