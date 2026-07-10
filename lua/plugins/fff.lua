@@ -9,10 +9,28 @@ return {
       show_scores = false,
     },
   },
-  lazy = false,
   keys = {
-    { "<leader>ff", function() require("fff").find_files() end, desc = "FFFind files" },
-    { "<leader>fg", function() require("fff").live_grep() end, desc = "LiFFFe grep" },
-    { "<leader>fw", function() require("fff").live_grep_under_cursor() end, mode = { "n", "x" }, desc = "Search current word / selection" },
+    {
+      "<leader>ff",
+      function()
+        require("fff").find_files()
+      end,
+      desc = "Find files",
+    },
+    {
+      "<leader>fg",
+      function()
+        require("fff").live_grep()
+      end,
+      desc = "Live grep",
+    },
+    {
+      "<leader>fw",
+      function()
+        require("fff").live_grep_under_cursor()
+      end,
+      mode = { "n", "x" },
+      desc = "Search word or selection",
+    },
   },
 }

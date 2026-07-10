@@ -10,29 +10,39 @@ return {
     "nvim-lualine/lualine.nvim",
     opts = {
       sections = {
-        lualine_x = { "encoding", "fileformat" },
+        lualine_x = {
+          {
+            "encoding",
+            cond = function()
+              return vim.bo.fileencoding ~= "" and vim.bo.fileencoding ~= "utf-8"
+            end,
+          },
+          {
+            "fileformat",
+            cond = function()
+              return vim.bo.fileformat ~= "unix"
+            end,
+          },
+        },
         lualine_y = {},
         lualine_z = { "location" },
       },
     },
   },
 
-  -- Zen mode for focused editing
+  -- Keep Snacks' picker available for LazyVim's search, buffer, git, and explorer maps.
   {
-    "folke/zen-mode.nvim",
+    "folke/snacks.nvim",
     opts = {
-      plugins = {
-        options = {
-          enabled = true,
-          ruler = false,
-          showcmd = false,
-          laststatus = 0,
-        },
-        tmux = { enabled = true },
-      },
+      picker = { enabled = true },
+      scroll = { enabled = false },
+      notifier = { style = "minimal" },
     },
-    keys = {
-      { "<leader>z", "<cmd>ZenMode<cr>", desc = "Zen Mode" },
-    },
+  },
+
+  -- Nordfox is the configured colorscheme; avoid loading an unused fallback.
+  {
+    "folke/tokyonight.nvim",
+    enabled = false,
   },
 }

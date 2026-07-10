@@ -1,14 +1,22 @@
 return {
-  "EdenEast/nightfox.nvim",
-  lazy = false,
-  priority = 1000,
-  opts = {
-    options = {
-      theme = "nordfox",
+  {
+    "EdenEast/nightfox.nvim",
+    lazy = false,
+    priority = 1000,
+    opts = {
+      options = {
+        theme = "nordfox",
+      },
+    },
+    config = function(_, opts)
+      require("nightfox").setup(opts)
+      vim.cmd.colorscheme("nordfox")
+    end,
+  },
+  {
+    "LazyVim/LazyVim",
+    opts = {
+      colorscheme = "nordfox",
     },
   },
-  config = function(_, opts)
-    require("nightfox").setup(opts)
-    vim.cmd.colorscheme("nordfox")
-  end,
 }
