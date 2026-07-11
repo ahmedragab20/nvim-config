@@ -29,3 +29,19 @@ end, { desc = "Copy Buffer Path" })
 -- macOS-friendly aliases for Neovim's native commenting mappings.
 vim.keymap.set("n", "<D-/>", "gcc", { remap = true, desc = "Comment line" })
 vim.keymap.set("x", "<D-/>", "gc", { remap = true, desc = "Comment selection" })
+
+vim.keymap.set("n", "<leader>g[", function()
+  local gs = package.loaded.gitsigns
+  if not gs then return end
+
+  local cur_line = vim.api.nvim_win_get_cursor(0)[1]
+  local hunks = gs.get_hunks()
+  if not hunks then return end
+
+  for _, hunk in ipairs(hunks) do
+    if cur_line >= hunk.added.start and cur_line < hunk.added.start + hunk.added.count then
+      gs.reset_hunk()
+      return
+    end
+  end
+end, { desc = "Restore hunk" })

@@ -125,6 +125,7 @@ its buffer remains available.
 | `<leader>gf` | Show the current file's history |
 | `<leader>gB` | Open the current location on the Git host |
 | `<leader>gY` | Copy the Git-host URL |
+| `<leader>g[` | Restore (reset) the hunk under the cursor |
 
 The Lazygit mappings are available when the `lazygit` executable is installed.
 
