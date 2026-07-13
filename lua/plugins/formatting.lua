@@ -19,6 +19,8 @@ local php_cs_fixer_configs = {
   ".php-cs-fixer.dist.php",
 }
 
+local pint_configs = { "pint.json", "pint.php" }
+
 local markdownlint_configs = {
   ".markdownlint-cli2.json",
   ".markdownlint-cli2.jsonc",
@@ -35,7 +37,7 @@ local markdownlint_configs = {
 
 local markdown_toc_configs = { "toc.json" }
 
-local required_mason_tools = { "biome", "oxfmt", "oxlint", "eslint_d", "intelephense" }
+local required_mason_tools = { "biome", "oxfmt", "oxlint", "eslint_d", "intelephense", "php-cs-fixer" }
 
 local formatter_support = {
   oxfmt = {
@@ -180,6 +182,44 @@ local function node_executable(ctx, command)
   local directory = start
   while directory do
     local local_command = vim.fs.joinpath(directory, "node_modules", ".bin", command)
+    if vim.fn.executable(local_command) == 1 then
+      executable_cache[cache_key] = local_command
+      return local_command
+    end
+
+    if directory == root then
+      break
+    end
+    local parent = vim.fs.dirname(directory)
+    if not parent or parent == directory then
+      break
+    end
+    directory = parent
+  end
+
+  if vim.fn.executable(command) == 1 then
+    executable_cache[cache_key] = command
+    return command
+  end
+
+  executable_cache[cache_key] = false
+  return nil
+end
+
+local function php_executable(ctx, command)
+  local start, root = config_bounds(ctx)
+  if not start or not root then
+    return nil
+  end
+
+  local cache_key = table.concat({ "php", command, start, root }, "\0")
+  if executable_cache[cache_key] ~= nil then
+    return executable_cache[cache_key] or nil
+  end
+
+  local directory = start
+  while directory do
+    local local_command = vim.fs.joinpath(directory, "vendor", "bin", command)
     if vim.fn.executable(local_command) == 1 then
       executable_cache[cache_key] = local_command
       return local_command
@@ -406,6 +446,18 @@ return {
       set_condition(opts.formatters, "php_cs_fixer", function(_, ctx)
         return has_config(ctx, "php_cs_fixer", php_cs_fixer_configs)
       end)
+
+      -- Pint: Laravel's formatter (built on php-cs-fixer), configured via pint.json or pint.php.
+      -- Only activates when a config file is present in the project.
+      opts.formatters.pint = opts.formatters.pint or {}
+      opts.formatters.pint.command = function(self, ctx)
+        return php_executable(ctx, "pint")
+      end
+      opts.formatters.pint.args = { "$FILENAME" }
+      set_condition(opts.formatters, "pint", function(_, ctx)
+        return has_config(ctx, "pint", pint_configs)
+      end)
+
       set_condition(opts.formatters, "markdownlint-cli2", function(_, ctx)
         return has_config(ctx, "markdownlint", markdownlint_configs)
       end)
@@ -441,6 +493,9 @@ return {
 
       -- Oxfmt does not support Astro; Biome is the only project-aware alternative.
       opts.formatters_by_ft.astro = { "biome", "prettier" }
+
+      -- PHP formatters: Pint (Laravel) preferred, then php-cs-fixer, then nothing.
+      opts.formatters_by_ft.php = { "pint", "php_cs_fixer" }
     end,
   },
 }

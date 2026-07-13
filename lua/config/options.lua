@@ -3,6 +3,7 @@
 -- Add any additional options here
 
 vim.g.snacks_animate = false
+vim.g.lazyvim_php_lsp = "intelephense"
 
 vim.opt.guicursor = "n-v-ve-c-o-sm:block,i-ci:ver25,r-cr:hor20"
 
