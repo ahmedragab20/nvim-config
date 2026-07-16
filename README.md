@@ -21,7 +21,7 @@ Personal Neovim configuration built on [LazyVim](https://github.com/LazyVim/Lazy
 
 ### Colorscheme
 
-- **Duskfox** ([Nightfox](https://github.com/EdenEast/nightfox.nvim)) replaces the default theme
+- **Rose Pine** ([neovim](https://github.com/rose-pine/neovim)) replaces the default theme
 - Tokyonight fallback is disabled
 
 ### Linting
