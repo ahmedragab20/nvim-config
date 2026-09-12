@@ -5,6 +5,9 @@
 -- .mdc (Nuxt Content Markdown Components)
 vim.filetype.add({ extension = { mdc = "markdown" } })
 
+-- Show Copilot inline; LazyVim handles accepting suggestions with <Tab>.
+vim.g.ai_cmp = false
+
 vim.g.snacks_animate = false
 vim.g.lazyvim_php_lsp = "intelephense"
 

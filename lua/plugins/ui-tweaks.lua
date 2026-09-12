@@ -30,7 +30,7 @@ return {
     },
   },
 
-  -- Keep Snacks' picker available for LazyVim's search, buffer, git, and explorer maps.
+  -- Keep specialized Snacks pickers; file/text searches are routed through FFF.
   {
     "folke/snacks.nvim",
     opts = {

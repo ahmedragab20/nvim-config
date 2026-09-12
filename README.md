@@ -10,6 +10,14 @@ Personal Neovim configuration built on [LazyVim](https://github.com/LazyVim/Lazy
 
 ## Customizations
 
+### GitHub Copilot
+
+- LazyVim's `ai.copilot` extra uses `zbirenbaum/copilot.lua` for automatic inline suggestions, not completion-menu entries.
+- Restart Neovim after config changes, run `:Copilot auth`, and finish GitHub browser sign-in; your account needs Copilot access.
+- Insert mode: `<Tab>` accepts the visible suggestion (snippet navigation takes precedence), `<M-]>`/`<M-[>` next/previous, and `<C-]>` dismisses it.
+- `:Copilot status` checks status; `:Copilot disable` / `:Copilot enable` toggles Copilot for the session.
+- Authentication is explicit, not a plugin-install build hook. Code context is sent to GitHub Copilot.
+
 ### Fuzzy Finder
 
 - **[fff.nvim](https://github.com/dmtrKovalenko/fff.nvim)** replaces the default Telescope/Snacks picker

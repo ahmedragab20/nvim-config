@@ -7,9 +7,9 @@
 
 | Keymap | Mode | Action now | Change |
 | --- | --- | --- | --- |
-| `<leader>ff` | Normal | Find files with FFF | Uses the lazy-loaded FFF picker |
-| `<leader>fg` | Normal | Live grep with FFF | Uses the lazy-loaded FFF picker |
-| `<leader>fw` | Normal / Visual | Search the word or selection with FFF | Uses the lazy-loaded FFF picker |
+| `<leader>ff` | Normal | Find files with FFF | Searches the project root |
+| `<leader>fg` | Normal | Search text with FFF | Searches the project root |
+| `<leader>fw` | Normal / Visual | Search the word or selection with FFF | Searches the project root |
 | `<D-/>` | Normal | Toggle the current line comment | macOS alias for native `gcc` |
 | `<D-/>` | Visual | Toggle the selected lines | macOS alias for native `gc` |
 | `gc` + motion | Normal | Toggle comments over a motion | Native Neovim behavior |
@@ -30,16 +30,23 @@ is unavailable.
 
 | Keymap | Action |
 | --- | --- |
-| `<leader>ff` | Find files with FFF |
-| `<leader>fg` | Live grep with FFF |
-| `<leader>fw` | Search the current word or visual selection with FFF |
+| `<leader><space>` / `<leader>ff` | FFF project-root files |
+| `<leader>fF` | FFF cwd files |
+| `<leader>fc` | FFF Neovim config files |
+| `<leader>/` / `<leader>sg` / `<leader>fg` | FFF project-root text |
+| `<leader>sG` | FFF cwd text |
+| `<leader>sw` / `<leader>fw` | FFF root word/selection in Normal/Visual |
+| `<leader>sW` | FFF cwd word/selection in Normal/Visual |
 | `<leader>,` | Select an open buffer |
 | `<leader>fb` | Select an open buffer |
 | `<leader>fn` | Create a new file |
 | `<leader>yf` | Copy the current buffer path |
-| `<leader>sg` | Grep from the project root |
 | `<leader>e` | Open the project-root explorer |
 | `<leader>E` | Open the explorer at the current working directory |
+
+LazyVim dashboard file and text searches use FFF too. Snacks remains for recent
+files, buffer-only searches, projects, help, diagnostics, Git, and LSP pickers.
+Native `/` and `?` searches are unchanged.
 
 ## Buffers
 
