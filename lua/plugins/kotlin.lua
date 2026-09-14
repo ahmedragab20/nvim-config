@@ -24,6 +24,10 @@ local function find_jdk()
 end
 
 local java_home = find_jdk()
+local java_env = java_home and {
+  JAVA_HOME = java_home,
+  PATH = java_home .. "/bin:" .. (vim.env.PATH or ""),
+} or nil
 
 return {
   {
@@ -31,8 +35,41 @@ return {
     opts = {
       servers = {
         kotlin_language_server = {
-          cmd_env = java_home and { JAVA_HOME = java_home } or nil,
+          cmd_env = java_env,
+          -- Search for the Gradle workspace before falling back to a module build file.
+          root_markers = {
+            { "settings.gradle.kts", "settings.gradle" },
+            "pom.xml",
+            { "build.gradle.kts", "build.gradle", "build.xml" },
+            ".git",
+          },
+          before_init = function(params, config)
+            -- Keep kls_database.db outside the checkout, isolated per workspace.
+            local root = config.root_dir or vim.fn.getcwd()
+            local cache = vim.fn.stdpath("cache") .. "/kotlin-language-server/" .. vim.fn.sha256(root)
+            vim.fn.mkdir(cache, "p")
+            config.init_options = vim.tbl_extend("force", config.init_options or {}, { storagePath = cache })
+            params.initializationOptions = config.init_options
+          end,
         },
+      },
+    },
+  },
+  {
+    "stevearc/conform.nvim",
+    optional = true,
+    opts = {
+      formatters = {
+        ktlint = { env = java_env },
+      },
+    },
+  },
+  {
+    "mfussenegger/nvim-lint",
+    optional = true,
+    opts = {
+      linters = {
+        ktlint = { env = java_env },
       },
     },
   },
