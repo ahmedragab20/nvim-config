@@ -17,6 +17,8 @@
 | `<leader>bd` | Normal | Delete the current buffer | LazyVim/Snacks implementation |
 | `<leader>wd` | Normal | Close the current window | Replaces the removed `<S-x>` override |
 | `X` | Normal | Delete the character before the cursor | Native Vim behavior restored |
+| `d` / `D` | Normal / Visual | Delete without yanking | Clipboard and `"` register are untouched; `"ad` still cuts into a named register |
+| `<A-d>` | Normal / Visual | Duplicate the line or selection below | Uses `:t`, so registers are untouched |
 | `<S-h>` / `<S-l>` | Normal | Previous / next buffer | LazyVim buffer navigation |
 | `[b` / `]b` | Normal | Previous / next buffer | LazyVim buffer navigation |
 | `<S-Left>` / `<S-Right>` | Normal | Unmapped | Broken BufferLine mappings removed |
@@ -43,6 +45,7 @@ is unavailable.
 | `<leader>yf` | Copy the current buffer path |
 | `<leader>e` | Open the project-root explorer |
 | `<leader>E` | Open the explorer at the current working directory |
+| `<leader>nt` | Reveal the current file in the explorer |
 
 LazyVim dashboard file and text searches use FFF too. Snacks remains for recent
 files, buffer-only searches, projects, help, diagnostics, Git, and LSP pickers.

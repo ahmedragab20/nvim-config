@@ -2,7 +2,7 @@
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
 
-vim.keymap.set("n", "<leader>nt", "<cmd>Neotree focus<cr>", { desc = "Focus Neo-tree" })
+vim.keymap.set("n", "<leader>nt", function() Snacks.explorer.reveal() end, { desc = "Reveal File in Explorer" })
 
 local command_aliases = {
   Q = "q",
@@ -47,3 +47,21 @@ vim.keymap.set("n", "<leader>g[", function()
     end
   end
 end, { desc = "Restore hunk" })
+
+-- Delete without yanking: d/D no longer overwrite the clipboard. An explicit
+-- register (e.g. "ad) still works, so cutting into a named register is possible.
+local function delete_to_black_hole(keys)
+  return function()
+    local register = vim.v.register
+    if register == '"' or register == "+" or register == "*" then
+      return '"_' .. keys
+    end
+    return keys
+  end
+end
+vim.keymap.set({ "n", "x" }, "d", delete_to_black_hole("d"), { expr = true, desc = "Delete (no yank)" })
+vim.keymap.set({ "n", "x" }, "D", delete_to_black_hole("D"), { expr = true, desc = "Delete to end (no yank)" })
+
+-- Duplicate the line or selection below, without touching registers.
+vim.keymap.set("n", "<A-d>", "<cmd>t.<cr>", { desc = "Duplicate line" })
+vim.keymap.set("x", "<A-d>", ":t'><cr>gv", { silent = true, desc = "Duplicate selection" })
