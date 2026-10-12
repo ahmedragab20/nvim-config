@@ -44,6 +44,7 @@ local js_linter_configs = {
 
 local phpcs_configs = { ".phpcs.xml", "phpcs.xml", ".phpcs.xml.dist", "phpcs.xml.dist" }
 local golangci_configs = { ".golangci.yml", ".golangci.yaml", ".golangci.toml", ".golangci.json" }
+local golangci_alias = "golangcilint_project"
 
 local markdownlint_configs = {
   ".markdownlint-cli2.json",
@@ -281,9 +282,27 @@ return {
     set_condition(opts.linters, "markdownlint-cli2", function(ctx)
       return has_config(ctx, "markdownlint", markdownlint_configs) and node_executable(ctx, "markdownlint-cli2") ~= nil
     end)
-    set_condition(opts.linters, "golangcilint", function(ctx)
-      return has_config(ctx, "golangcilint", golangci_configs) and executable(ctx, "golangci-lint") ~= nil
-    end)
+
+    -- Requiring nvim-lint's golangcilint module runs `golangci-lint version` and
+    -- `go env GOMOD` synchronously, and LazyVim requires every linter that has a
+    -- table override during setup (~60ms on every startup). Route Go through an
+    -- alias with no module behind it, and load the real linter only once a buffer
+    -- qualifies.
+    local golangci_loaded = false
+    local function golangci_condition(ctx)
+      if not (has_config(ctx, "golangcilint", golangci_configs) and executable(ctx, "golangci-lint") ~= nil) then
+        return false
+      end
+      if not golangci_loaded then
+        golangci_loaded = true
+        require("lint").linters[golangci_alias] = vim.tbl_extend("force", require("lint.linters.golangcilint"), {
+          name = "golangcilint",
+          condition = golangci_condition,
+        })
+      end
+      return true
+    end
+    opts.linters[golangci_alias] = { condition = golangci_condition }
 
     for ft, supported_linters in pairs(linter_support) do
       local linters = {}
@@ -297,7 +316,7 @@ return {
 
     -- The PHP and Markdown extras register these linters. Keep their filetype
     -- routes, but prevent them from running outside an explicitly configured project.
-    opts.linters_by_ft.go = { "golangcilint" }
+    opts.linters_by_ft.go = { golangci_alias }
     opts.linters_by_ft.php = { "phpcs" }
     opts.linters_by_ft.markdown = { "markdownlint-cli2" }
   end,
