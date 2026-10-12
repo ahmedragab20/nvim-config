@@ -144,6 +144,7 @@ The Lazygit mappings are available when the `lazygit` executable is installed.
 | Keymap | Action |
 | --- | --- |
 | `<leader>uz` | Toggle Zen mode |
+| `<leader>ut` | Toggle the sticky function/class header |
 | `<leader>wm` | Toggle window zoom |
 | `<leader>us` | Toggle spelling |
 | `<leader>uw` | Toggle line wrapping |
