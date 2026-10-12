@@ -2,6 +2,21 @@ return {
   {
     "lewis6991/gitsigns.nvim",
     opts = function(_, opts)
+      -- Inline author/age/summary for the cursor line.
+      opts.current_line_blame = true
+      opts.current_line_blame_opts = { delay = 300, ignore_whitespace = true }
+      opts.current_line_blame_formatter = "<author>, <author_time:%R> · <summary>"
+
+      Snacks.toggle({
+        name = "Git Line Blame",
+        get = function()
+          return require("gitsigns.config").config.current_line_blame
+        end,
+        set = function(state)
+          require("gitsigns").toggle_current_line_blame(state)
+        end,
+      }):map("<leader>gT")
+
       local prev_on_attach = opts.on_attach
 
       opts.on_attach = function(bufnr)

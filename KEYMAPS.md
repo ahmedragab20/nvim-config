@@ -131,13 +131,22 @@ its buffer remains available.
 | `<leader>gG` | Open Lazygit at the working directory |
 | `<leader>gL` | Show the Git log for the working directory |
 | `<leader>gl` | Show the Git log for the project root |
-| `<leader>gb` | Show Git blame for the current line |
-| `<leader>gf` | Show the current file's history |
+| `<leader>gb` | Pick from the current line's commit history |
+| `<leader>gf` | Pick from the current file's commit history |
+| `<leader>gc` | Open the commit that last changed the current line in Diffview |
+| `<leader>gF` | File history in Diffview (follows renames) |
+| `<leader>gF` | Visual: history of the selected lines in Diffview |
+| `<leader>gV` | Repo history in Diffview |
+| `<leader>gv` | Toggle Diffview of uncommitted changes |
+| `<leader>gT` | Toggle inline blame for the cursor line (on by default) |
 | `<leader>gB` | Open the current location on the Git host |
 | `<leader>gY` | Copy the Git-host URL |
 | `<leader>g[` | Restore (reset) the hunk under the cursor |
 
 The Lazygit mappings are available when the `lazygit` executable is installed.
+`<Enter>` in the Git log pickers (`<leader>gl`, `<leader>gL`, `<leader>gb`,
+`<leader>gf`) opens the commit in Diffview instead of checking it out. Press
+`q` in any Diffview window to close it.
 
 ## UI and utilities
 
