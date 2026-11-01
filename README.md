@@ -30,6 +30,8 @@ Personal Neovim configuration built on [LazyVim](https://github.com/LazyVim/Lazy
 ### Colorscheme
 
 - **Rose Pine** ([neovim](https://github.com/rose-pine/neovim)) replaces the default theme
+- Its colors come from the host terminal (`lua/config/terminal_palette.lua`), read over OSC 4/10/11 at startup and whenever the terminal reports a new background
+- Terminals that don't answer those queries get stock Rose Pine
 - Tokyonight fallback is disabled
 
 ### Linting
