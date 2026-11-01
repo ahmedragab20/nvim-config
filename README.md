@@ -63,6 +63,7 @@ Personal Neovim configuration built on [LazyVim](https://github.com/LazyVim/Lazy
 
 - **Rust**: `rustaceanvim` for LSP (instead of rust_analyzer standalone)
 - **PHP**: `intelephense` (instead of phpactor)
+- **Swift** (`lua/plugins/swift.lua`): `sourcekit-lsp` from the Swift toolchain. `swift format` runs with a `.swift-format` config, SwiftFormat with `.swiftformat`, and SwiftLint with `.swiftlint.yml`
 - Enabled LazyVim extras: `lang.go`, `lang.php`, `lang.rust`, `lang.astro`, `lang.typescript`, `lang.vue`, `lang.markdown`
 - Enabled LazyVim extra: `formatting.prettier`
 
