@@ -7,4 +7,4 @@ foo.*
 *.log
 data
 .DS_Store
-.pi/kotlin-smoke/
+.pi/
